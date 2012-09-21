@@ -9,4 +9,12 @@ public interface InputDriver {
    * receiver.
    */
   public void pumpInput(InputReceiver dst);
+
+  /**
+   * Performs any actions necessary to install this InputDriver into the given
+   * GameManager. (This does not include calling installInputDriver().)
+   *
+   * This method should be protected, but for some reason Java won't allow that.
+   */
+  /*protected*/ public void installInto(GameManager gm);
 }

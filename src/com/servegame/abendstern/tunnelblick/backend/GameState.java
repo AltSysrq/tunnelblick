@@ -101,4 +101,38 @@ public abstract class GameState implements InputReceiver {
    * Default does nothing.
    */
   protected void receiveInputThis(InputEvent e) {}
+
+  /* package-private */ final void disposeGraphics(GL2 gl) {
+    if (subState != null)
+      subState.disposeGraphics(gl);
+    disposeGraphicsThis(gl);
+  }
+
+  /**
+   * Called when the AWT has decided to obliterate the GL context.
+   *
+   * The subclass must destroy any OpenGL resources it holds, and prepare to
+   * recreate them momentarily.
+   *
+   * Default does nothing.
+   */
+  protected void disposeGraphicsThis(GL2 gl) {}
+
+  /* package-private */ final void reinitGraphics(GL2 gl) {
+    reinitGraphicsThis(gl);
+    if (subState != null)
+      subState.reinitGraphics(gl);
+  }
+
+  /**
+   * Called (usually) after a call to disposeGraphicsThis(), in order to
+   * reinstate any resources destroyed by the latter.
+   *
+   * The subclass must NOT assume that this will be called except after a call
+   * to disposeGraphicsThis(), and must NOT break if it is called under any
+   * other condition.
+   *
+   * Default does nothing.
+   */
+  protected void reinitGraphicsThis(GL2 gl) {}
 }
