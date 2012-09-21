@@ -11,11 +11,11 @@ public class TestState extends GameState {
     gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
     gl.glColor3f(1,0,0);
     gl.glBegin(GL2.GL_TRIANGLES);
-    gl.glVertex3f(0,0, -1);
+    gl.glVertex3f(0.1f,0.1f, -0.101f);
     gl.glColor3f(0,1,0);
-    gl.glVertex3f(1,0, -5);
+    gl.glVertex3f(0.9f,0.1f, -0.101f);
     gl.glColor3f(0,0,1);
-    gl.glVertex3f(0.5f, 0.5f, -20);
+    gl.glVertex3f(0.5f, 0.5f, -0.101f);
     gl.glEnd();
   }
 }

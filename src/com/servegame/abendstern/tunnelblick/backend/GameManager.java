@@ -48,6 +48,7 @@ implements Destroyable, GLEventListener, Runnable {
     frame.setVisible(true);
 
     glCanvas.addGLEventListener(this);
+    glCanvas.setAutoSwapBufferMode(true);
     frame.addWindowListener(new WindowAdapter() {
         @Override
         public void windowClosing(WindowEvent e) {
@@ -107,8 +108,11 @@ implements Destroyable, GLEventListener, Runnable {
     gl.glViewport(x, y, w, h);
     gl.glMatrixMode(GL2.GL_PROJECTION);
     gl.glLoadIdentity();
-    gl.glFrustumf(0, 1, 0, vheight(), 0.1f, 30.0f);
+    gl.glFrustumf(-1, 1, -vheight(), vheight(), 0.1f, 30.0f);
+    gl.glScalef(2.0f, 2.0f, 1);
+    gl.glTranslatef(-0.5f, -vheight()/2.0f, 0);
     gl.glMatrixMode(GL2.GL_MODELVIEW);
+    gl.glLoadIdentity();
 
     if (state != null)
       state.configureGL(gl);
