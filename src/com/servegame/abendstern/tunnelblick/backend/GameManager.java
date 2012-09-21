@@ -60,12 +60,13 @@ implements Destroyable, GLEventListener, Runnable {
     GameManager man =
       new GameManager("Test",
                       Integer.parseInt(argv[0]), Integer.parseInt(argv[1]));
+    man.setState(new TestState());
     man.run();
     man.destroy();
   }
 
   @Override
-  public synchronized void destroy() {
+  public void destroy() {
     for (WeakReference<Destroyable> wd: resources) {
       Destroyable d = wd.get();
       if (d != null)
@@ -121,7 +122,7 @@ implements Destroyable, GLEventListener, Runnable {
    * These items are destroyed before the frame is destroyed.
    */
   public synchronized void addResource(Destroyable d) {
-    resources.add(new WeakReference(d));
+    resources.add(new WeakReference<Destroyable>(d));
   }
 
   /**
@@ -160,10 +161,15 @@ implements Destroyable, GLEventListener, Runnable {
               stateNeedsConfigureGL = true;
           }
         }
+      }
 
-        //Draw
-        glCanvas.display();
+      //Not in synchronised block because display() has the AWT do the work,
+      //and blocks main...
 
+      //Draw
+      glCanvas.display();
+
+      synchronized (this) {
         //Handle inputs
         if (state != null) {
           for (InputDriver driver: inputDrivers)
