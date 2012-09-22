@@ -67,6 +67,14 @@ public abstract class GameObject {
    */
   public void collideWithPlayer(Player p) {}
 
+  /**
+   * Called when the object has collided with a Projectile object it did not
+   * launch.
+   *
+   * Default does nothing.
+   */
+  public void collideWithProjectile(Projectile p) {}
+
   /** Returns whether the object is currently alive. */
   public final boolean isAlive() { return alive; }
   /** Returns the X coordinate of this object */

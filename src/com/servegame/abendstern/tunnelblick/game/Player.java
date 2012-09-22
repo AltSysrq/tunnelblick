@@ -56,8 +56,14 @@ public class Player extends ModelledObject {
   float vy = 0, vz = -2.0f;
   private static final float GRAVITY = -5.0f, ACCEL = -0.01f;
 
-  public Player(GameField field, Distortion distortion) {
-    super(field, 0.5f, 0, 0, MODEL, distortion);
+  private final Tunnelblick game;
+
+  private static final float SHOT_INTERVAL = 0.5f;
+  private float timeUntilShot = SHOT_INTERVAL;
+
+  public Player(Tunnelblick tb) {
+    super(tb.field, 0.5f, 0, 0, MODEL, tb.distortion);
+    this.game = tb;
     y = h/2;
   }
 
@@ -65,6 +71,14 @@ public class Player extends ModelledObject {
     vy += GRAVITY*et;
     vz += ACCEL*et;
     moveTo(x, y+vy*et, z+vz*et, true);
+
+    timeUntilShot -= et;
+    if (timeUntilShot <= 0) {
+      timeUntilShot += SHOT_INTERVAL;
+
+      game.field.add(new Projectile(game.field, this, x, y, z,
+                                    -1, game.distortion));
+    }
   }
 
   public void collideWith(GameObject that) {

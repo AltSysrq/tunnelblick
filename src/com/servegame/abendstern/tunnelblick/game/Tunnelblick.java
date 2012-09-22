@@ -16,7 +16,7 @@ public class Tunnelblick extends GameState {
 
   public Tunnelblick(GameManager man) {
     this.man = man;
-    player = new Player(field, distortion);
+    player = new Player(this);
     field.add(player);
   }
 

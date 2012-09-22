@@ -176,7 +176,7 @@ public final class Tunnel {
   public void pulse(float z, int col,
                     float r, float g, float b, float speed, float delay) {
     Pulse pulse = new Pulse();
-    pulse.coord = z/GSQ_LEN + offset;
+    pulse.coord = z/GSQ_LEN - offset;
     pulse.speed = speed;
     pulse.dr = r;
     pulse.dg = g;

@@ -80,6 +80,6 @@ public class Cactus extends Enemy {
   protected float getColourR() { return 0; }
   protected float getColourG() { return 0.8f; }
   protected float getColourB() { return 0; }
-  protected float getPulseSpeed() { return 2.0f; }
+  protected float getPulseSpeed() { return 15.0f; }
   protected int getAward() { return 100; }
 }

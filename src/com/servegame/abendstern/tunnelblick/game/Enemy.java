@@ -28,6 +28,33 @@ public abstract class Enemy extends ModelledObject {
     p.kill();
   }
 
+  public void collideWithProjectile(Projectile p) {
+    --hitPoints;
+    if (hitPoints <= 0) {
+      //Die
+      alive = false;
+      //Create pulses
+      int initialCol = (int)(x / Tunnel.GSQ_SZ);
+      float r = getColourR(), g = getColourG(), b = getColourB();
+      float speed = getPulseSpeed();
+      //Reduce colour intensity since half is already the base
+      r /= 2;
+      g /= 2;
+      b /= 2;
+
+      game.tunnel.pulse(z, initialCol, r, g, b, -speed, 0);
+      game.tunnel.pulse(z, initialCol, -r, -g, -b, speed, 0);
+      for (int i = 1; initialCol-i >= 0; ++i) {
+        game.tunnel.pulse(z, initialCol-i, r, g, b, -speed, i/speed);
+        game.tunnel.pulse(z, initialCol-i, -r, -g, -b, speed, i/speed);
+      }
+      for (int i = 1; initialCol+i < Tunnel.GRID_WIDTH; ++i) {
+        game.tunnel.pulse(z, initialCol+i, r, g, b, -speed, i/speed);
+        game.tunnel.pulse(z, initialCol+i, -r, -g, -b, speed, i/speed);
+      }
+    }
+  }
+
   /** Returns the red component of the predominant colour of this enemy. */
   protected abstract float getColourR();
   /** Returns the green component of the predominant colour of this enemy. */
