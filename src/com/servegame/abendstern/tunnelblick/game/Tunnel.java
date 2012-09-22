@@ -11,6 +11,7 @@ public final class Tunnel {
   public static final int GRID_WIDTH = 4;
   public static final int GRID_LENGTH = 128;
   public static final float GSQ_SZ = 1.0f / GRID_WIDTH;
+  public static final float GSQ_LEN = GSQ_SZ*2;
 
   private final float grid[][][] = new float[GRID_LENGTH][GRID_WIDTH][3];
   private static final class Pulse {
@@ -52,8 +53,8 @@ public final class Tunnel {
 
     for (int off = 0; off < GRID_LENGTH; off += 32) {
       for (int i = 0; i < GRID_WIDTH; ++i) {
-        pulse(off*GSQ_SZ, i, +0.5f, +0.5f, +0.5f, +5.0f, 0);
-        pulse(off*GSQ_SZ, i, -0.5f, -0.5f, -0.5f, -5.0f, 0);
+        pulse(off*GSQ_LEN, i, +0.5f, +0.5f, +0.5f, +5.0f, 0);
+        pulse(off*GSQ_LEN, i, -0.5f, -0.5f, -0.5f, -5.0f, 0);
       }
     }
   }
@@ -110,23 +111,29 @@ public final class Tunnel {
       }
     }
 
+    //Translate for partial squares
+    gl.glPushMatrix();
+    gl.glTranslatef(0, 0, -(float)(Math.floor(offset)-offset)*GSQ_LEN);
+
     gl.glBegin(GL2.GL_TRIANGLES);
 
     //Draw the floor
     int firstFloorTile = (int)Math.floor(offset);
-    float subOffset = offset - firstFloorTile;
+    //Manually handle negative case since % is broken
+    if (firstFloorTile < 0)
+      firstFloorTile += GRID_LENGTH;
     float halfSpace = GSQ_SZ * 0.05f;
     for (int z = 0; z < GRID_LENGTH/2; ++z) {
       for (int x = 0; x < GRID_WIDTH; ++x) {
         float[] colour = grid[(firstFloorTile+z) % GRID_LENGTH][x];
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
 
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
       }
     }
 
@@ -139,17 +146,18 @@ public final class Tunnel {
         float x = (i < GRID_WIDTH/2? 0 : 1);
         float y = 2*(i < GRID_WIDTH/2? i*GSQ_SZ : (GRID_WIDTH - i - 1)*GSQ_SZ);
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace));
 
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_LEN - halfSpace));
       }
     }
 
     gl.glEnd();
+    gl.glPopMatrix();
   }
 
   /**
@@ -168,7 +176,7 @@ public final class Tunnel {
   public void pulse(float z, int col,
                     float r, float g, float b, float speed, float delay) {
     Pulse pulse = new Pulse();
-    pulse.coord = z/GSQ_SZ + offset;
+    pulse.coord = z/GSQ_LEN + offset;
     pulse.speed = speed;
     pulse.dr = r;
     pulse.dg = g;
@@ -178,5 +186,14 @@ public final class Tunnel {
     qp.when = clock + delay;
     qp.column = col;
     pulseQueue.add(qp);
+  }
+
+  /**
+   * Translates along Z to match GameField.
+   */
+  public void translateZ(GameObject reference, float offset) {
+    this.offset -= (reference.getZ() - offset) / GSQ_LEN;
+    while (this.offset > GRID_LENGTH)
+      this.offset -= GRID_LENGTH;
   }
 }

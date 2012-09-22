@@ -9,17 +9,48 @@ public class Tunnelblick extends GameState {
   private GameField field = new GameField();
   private Tunnel tunnel = new Tunnel();
   private Distortion distortion = new Distortion();
+  private Player player;
+  private final GameManager man;
+
+  public Tunnelblick(GameManager man) {
+    this.man = man;
+    player = new Player(field, distortion);
+    field.add(player);
+  }
 
   protected GameState updateThis(float et) {
     field.update(et);
     tunnel.update(et);
+    float offset = -getNearClippingPlane() - player.getL()/2;
+    tunnel.translateZ(player, offset);
+    field.translateZ(player, offset);
     return this;
   }
 
   protected void drawThis(GL2 gl) {
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+    configureGL(gl);
     tunnel.draw(gl, distortion);
     field.draw(gl);
+  }
+
+  protected void receiveInputThis(InputEvent evt) {
+    player.receiveInput(evt);
+  }
+
+  public void configureGL(GL2 gl) {
+    gl.glMatrixMode(GL2.GL_PROJECTION);
+    gl.glLoadIdentity();
+    gl.glFrustumf(-1, 1, -man.vheight(), man.vheight(),
+                  getNearClippingPlane(), 30.0f);
+    gl.glScalef(2.0f, 2.0f, 1);
+    gl.glTranslatef(-0.5f, -man.vheight()/2.0f, 0);
+    gl.glMatrixMode(GL2.GL_MODELVIEW);
+    gl.glLoadIdentity();
+  }
+
+  private float getNearClippingPlane() {
+    return 1.5f/player.getSpeed();
   }
 
   public static void main(String[] args) {
@@ -34,7 +65,7 @@ public class Tunnelblick extends GameState {
     mmmid.setPointerMode(false);
     man.installInputDriver(mmmid);
 
-    man.setState(new Tunnelblick());
+    man.setState(new Tunnelblick(man));
     man.run();
     man.destroy();
   }

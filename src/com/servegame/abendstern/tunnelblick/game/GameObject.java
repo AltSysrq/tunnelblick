@@ -88,6 +88,11 @@ public abstract class GameObject {
    * @return Whether any movement actually occurred.
    */
   protected final boolean moveTo(float x, float y, float z, boolean force) {
+    //Snap to boundaries
+    if (x - w/2 < 0) x = w/2;
+    if (x + w/2 > 1) x = 1 - w/2;
+    if (y - h/2 < 0) y = h/2;
+
     for (GameObject that: field) {
       if (that != this) {
         if (overlap(x, w, that.x, that.w) &&

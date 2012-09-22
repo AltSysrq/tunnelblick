@@ -12,7 +12,7 @@ public final class MouseButtonGestureInputDriver
 extends ButtonGestureInputDriver
 implements MouseListener {
   public void installInto(GameManager man) {
-    man.getFrame().addMouseListener(this);
+    man.getCanvas().addMouseListener(this);
   }
 
   public void mousePressed(MouseEvent e) {

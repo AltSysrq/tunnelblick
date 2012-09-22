@@ -106,13 +106,7 @@ implements Destroyable, GLEventListener, Runnable {
                                    int x, int y, int w, int h) {
     GL2 gl = drawable.getGL().getGL2();
     gl.glViewport(x, y, w, h);
-    gl.glMatrixMode(GL2.GL_PROJECTION);
-    gl.glLoadIdentity();
-    gl.glFrustumf(-1, 1, -vheight(), vheight(), 0.1f, 30.0f);
-    gl.glScalef(2.0f, 2.0f, 1);
-    gl.glTranslatef(-0.5f, -vheight()/2.0f, 0);
-    gl.glMatrixMode(GL2.GL_MODELVIEW);
-    gl.glLoadIdentity();
+    gl.glEnable(GL2.GL_DEPTH_TEST);
 
     if (state != null)
       state.configureGL(gl);

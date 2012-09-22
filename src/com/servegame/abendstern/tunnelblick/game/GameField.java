@@ -47,16 +47,16 @@ public final class GameField implements Iterable<GameObject> {
 
   /**
    * Translates the Z coordinate of all objects such that the given reference
-   * object will have a Z coordinate of zero.
+   * object will have a Z coordinate of offset.
    *
    * Objects which end up with a Z coordinate greater than +1 are destroyed
    * (since this is in front of the screen).
    */
-  public void translateZ(GameObject reference) {
+  public void translateZ(GameObject reference, float offset) {
     for (ListIterator<GameObject> it = objects.listIterator();
          it.hasNext(); ) {
       GameObject go = it.next();
-      go.z -= reference.z;
+      go.z -= reference.z - offset;
       if (go.z > 1)
         it.remove();
     }
