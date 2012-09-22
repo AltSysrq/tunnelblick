@@ -209,6 +209,12 @@ implements Destroyable, GLEventListener, Runnable {
   public Frame getFrame() { return frame; }
 
   /**
+   * Returns a component which represents the canvas on which drawing is
+   * performed.
+   */
+  public Component getCanvas() { return glCanvas; }
+
+  /**
    * Returns the shared InputStatus object.
    */
   public InputStatus getSharedInputStatus() { return inputStatus; }
