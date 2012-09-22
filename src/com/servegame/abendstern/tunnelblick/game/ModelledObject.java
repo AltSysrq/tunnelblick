@@ -15,6 +15,10 @@ import javax.media.opengl.*;
 public abstract class ModelledObject extends GameObject {
   private float[] model;
   protected final Distortion distortion;
+  /**
+   * The around-centre-Z rotation of the model, in degrees.
+   */
+  protected float rotation = 0;
 
   protected ModelledObject(GameField field, float x, float y, float z,
                            float[] model, Distortion distortion) {
@@ -51,6 +55,7 @@ public abstract class ModelledObject extends GameObject {
   public void draw(GL2 gl) {
     gl.glPushMatrix();
     gl.glTranslatef(x, y, z);
+    gl.glRotatef(rotation, 0, 0, 1);
     gl.glBegin(GL.GL_TRIANGLES);
     for (int i = 0; i < model.length; i += 4) {
       if (model[i] == 0)

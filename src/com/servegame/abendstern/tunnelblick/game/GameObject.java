@@ -60,6 +60,13 @@ public abstract class GameObject {
    */
   public abstract void collideWith(GameObject other);
 
+  /**
+   * Called when the object has collided with a Player object.
+   *
+   * Default does nothing.
+   */
+  public void collideWithPlayer(Player p) {}
+
   /** Returns whether the object is currently alive. */
   public final boolean isAlive() { return alive; }
   /** Returns the X coordinate of this object */

@@ -68,6 +68,13 @@ public class Player extends ModelledObject {
   }
 
   public void collideWith(GameObject that) {
+    that.collideWithPlayer(this);
+  }
+
+  /**
+   * Marks this Player as dead.
+   */
+  public void kill() {
     alive = false;
   }
 

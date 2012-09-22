@@ -53,10 +53,11 @@ public final class GameField implements Iterable<GameObject> {
    * (since this is in front of the screen).
    */
   public void translateZ(GameObject reference, float offset) {
+    float refz = reference.z;
     for (ListIterator<GameObject> it = objects.listIterator();
          it.hasNext(); ) {
       GameObject go = it.next();
-      go.z -= reference.z - offset;
+      go.z -= refz - offset;
       if (go.z > 1)
         it.remove();
     }

@@ -6,11 +6,13 @@ import javax.media.opengl.*;
 import com.servegame.abendstern.tunnelblick.backend.*;
 
 public class Tunnelblick extends GameState {
-  private GameField field = new GameField();
-  private Tunnel tunnel = new Tunnel();
-  private Distortion distortion = new Distortion();
+  public final GameField field = new GameField();
+  public final Tunnel tunnel = new Tunnel();
+  public final Distortion distortion = new Distortion();
   private Player player;
-  private final GameManager man;
+  public final GameManager man;
+
+  private EnemyFactory factory = new EnemyFactory(this);
 
   public Tunnelblick(GameManager man) {
     this.man = man;
@@ -19,6 +21,7 @@ public class Tunnelblick extends GameState {
   }
 
   protected GameState updateThis(float et) {
+    factory.update(et, player.getSpeed());
     field.update(et);
     tunnel.update(et);
     float offset = -getNearClippingPlane() - player.getL()/2;
