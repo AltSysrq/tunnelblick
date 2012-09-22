@@ -8,6 +8,7 @@ import com.servegame.abendstern.tunnelblick.backend.*;
 public class Tunnelblick extends GameState {
   private GameField field = new GameField();
   private Tunnel tunnel = new Tunnel();
+  private Distortion distortion = new Distortion();
 
   protected GameState updateThis(float et) {
     field.update(et);
@@ -17,7 +18,7 @@ public class Tunnelblick extends GameState {
 
   protected void drawThis(GL2 gl) {
     gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-    tunnel.draw(gl);
+    tunnel.draw(gl, distortion);
     field.draw(gl);
   }
 

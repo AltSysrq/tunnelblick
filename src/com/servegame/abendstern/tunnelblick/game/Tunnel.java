@@ -82,7 +82,7 @@ public final class Tunnel {
   /**
    * Draws the tunnel.
    */
-  public void draw(GL2 gl) {
+  public void draw(GL2 gl, Distortion d) {
     //Calculate the colours for the grid squares
     //First, reset to neutral
     for (int i = 0; i < grid.length; ++i)
@@ -120,13 +120,13 @@ public final class Tunnel {
       for (int x = 0; x < GRID_WIDTH; ++x) {
         float[] colour = grid[(firstFloorTile+z) % GRID_LENGTH][x];
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        gl.glVertex3f((x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f((x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f((x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
 
-        gl.glVertex3f((x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f((x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
-        gl.glVertex3f((x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_SZ - halfSpace));
       }
     }
 
@@ -139,13 +139,13 @@ public final class Tunnel {
         float x = (i < GRID_WIDTH/2? 0 : 1);
         float y = 2*(i < GRID_WIDTH/2? i*GSQ_SZ : (GRID_WIDTH - i - 1)*GSQ_SZ);
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        gl.glVertex3f(x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f(x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f(x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
 
-        gl.glVertex3f(x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
-        gl.glVertex3f(x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
-        gl.glVertex3f(x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_SZ + halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_SZ - halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_SZ - halfSpace));
       }
     }
 
