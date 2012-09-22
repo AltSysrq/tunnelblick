@@ -17,7 +17,7 @@ public class Tunnelblick extends GameState {
   }
 
   protected void drawThis(GL2 gl) {
-    gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+    gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
     tunnel.draw(gl, distortion);
     field.draw(gl);
   }
