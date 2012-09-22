@@ -38,13 +38,15 @@ implements MouseMotionListener, MouseWheelListener {
 
     InputStatus is = manager.getSharedInputStatus();
 
-    if (pointerMode) {
-      is.pointers[0][0] = x;
-      is.pointers[0][1] = y;
-      enqueue(new InputEvent(InputEvent.TYPE_POINTER_MOVEMENT, 0, x, y));
-    } else {
-      is.bodies[0] = x;
-      enqueue(new InputEvent(InputEvent.TYPE_BODY_MOVEMENT, 0, x, y));
+    synchronized (manager) {
+      if (pointerMode) {
+        is.pointers[0][0] = x;
+        is.pointers[0][1] = y;
+        enqueue(new InputEvent(InputEvent.TYPE_POINTER_MOVEMENT, 0, x, y));
+      } else {
+        is.bodies[0] = x;
+        enqueue(new InputEvent(InputEvent.TYPE_BODY_MOVEMENT, 0, x, y));
+      }
     }
   }
 
