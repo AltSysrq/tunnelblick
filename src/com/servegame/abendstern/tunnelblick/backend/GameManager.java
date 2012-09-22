@@ -202,4 +202,28 @@ implements Destroyable, GLEventListener, Runnable {
   public final float vheight() {
     return glCanvas.getHeight() / (float)glCanvas.getWidth();
   }
+
+  /**
+   * Returns the Frame used by this GameManager.
+   */
+  public Frame getFrame() { return frame; }
+
+  /**
+   * Returns the shared InputStatus object.
+   */
+  public InputStatus getSharedInputStatus() { return inputStatus; }
+
+  /**
+   * Returns a copy of the current InputStatus.
+   */
+  public InputStatus getInputStatus() {
+    //This would be SO much easier in C...
+    InputStatus is = new InputStatus();
+    for (int i = 0; i < inputStatus.bodies.length; ++i)
+      is.bodies[i] = inputStatus.bodies[i];
+    for (int i = 0; i < inputStatus.pointers.length; ++i)
+      for (int j = 0; j < inputStatus.pointers[i].length; ++j)
+        is.pointers[i][j] = inputStatus.pointers[i][j];
+    return is;
+  }
 }
