@@ -42,7 +42,7 @@ public class Tunnelblick extends GameState {
     gl.glMatrixMode(GL2.GL_PROJECTION);
     gl.glLoadIdentity();
     gl.glFrustumf(-1, 1, -man.vheight(), man.vheight(),
-                  getNearClippingPlane(), 30.0f);
+                  getNearClippingPlane(), 128.0f);
     gl.glScalef(2.0f, 2.0f, 1);
     gl.glTranslatef(-0.5f, -man.vheight()/2.0f, 0);
     gl.glMatrixMode(GL2.GL_MODELVIEW);

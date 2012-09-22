@@ -54,7 +54,7 @@ public class Player extends ModelledObject {
   static { normalise(MODEL); }
 
   float vy = 0, vz = -2.0f;
-  private static final float GRAVITY = -1.0f, ACCEL = -0.01f;
+  private static final float GRAVITY = -5.0f, ACCEL = -0.01f;
 
   public Player(GameField field, Distortion distortion) {
     super(field, 0.5f, 0, 0, MODEL, distortion);
@@ -82,7 +82,7 @@ public class Player extends ModelledObject {
       case InputEvent.GESTURE_JUMP:
         //Set vy to upward velocity if close enough to the ground
         if (y - h*2/3 < 0)
-          vy = 0.5f;
+          vy = 2.0f;
         break;
       }
       break;

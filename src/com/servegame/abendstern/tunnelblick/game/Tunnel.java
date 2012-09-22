@@ -9,7 +9,7 @@ import javax.media.opengl.*;
  */
 public final class Tunnel {
   public static final int GRID_WIDTH = 4;
-  public static final int GRID_LENGTH = 128;
+  public static final int GRID_LENGTH = 256;
   public static final float GSQ_SZ = 1.0f / GRID_WIDTH;
   public static final float GSQ_LEN = GSQ_SZ*2;
 
