@@ -67,37 +67,52 @@ public class Bat extends Enemy {
   private static final float FHH = 0.1f;
   private static final float FHW = 0.075f;
   private static final float[] FALLING_MODEL = {
+    1, 0.7f, 0, 0.7f,
+    0, 0, +FHH, 0,
     1, 0, 0, 0,
     0, -FHW, 0, -FHW,
-    0, 0, +FHH, 0,
     0, +FHW, 0, -FHW,
 
-    0, -FHW, 0, -FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, +FHH, 0,
+    1, 0, 0, 0,
+    0, -FHW, 0, -FHW,
     0, -FHW, 0, +FHW,
 
-    0, +FHW, 0, -FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, +FHH, 0,
+    1, 0, 0, 0,
+    0, +FHW, 0, -FHW,
     0, +FHW, 0, +FHW,
 
-    0, -FHW, 0, +FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, +FHH, 0,
+    1, 0, 0, 0,
+    0, -FHW, 0, +FHW,
     0, +FHW, 0, +FHW,
 
-    0, -FHW, 0, -FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, -FHH, 0,
+    1, 0, 0, 0,
+    0, -FHW, 0, -FHW,
     0, +FHW, 0, -FHW,
 
-    0, -FHW, 0, -FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, -FHH, 0,
+    1, 0, 0, 0,
+    0, -FHW, 0, -FHW,
     0, -FHW, 0, +FHW,
 
-    0, +FHW, 0, -FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, -FHH, 0,
+    1, 0, 0, 0,
+    0, +FHW, 0, -FHW,
     0, +FHW, 0, +FHW,
 
-    0, -FHW, 0, +FHW,
+    1, 0.7f, 0, 0.7f,
     0, 0, -FHH, 0,
+    1, 0, 0, 0,
+    0, -FHW, 0, +FHW,
     0, +FHW, 0, +FHW,
   };
 
