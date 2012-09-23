@@ -152,7 +152,7 @@ public class Bat extends Enemy {
         else
           newx = x - XSPEED*et;
 
-        moveTo(newx, y, z + vz*et, false);
+        moveTo(newx, y, z + vz*et, true);
       }
     } else {
       //Fall to the ground
