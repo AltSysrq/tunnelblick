@@ -1,7 +1,7 @@
 package com.servegame.abendstern.tunnelblick.game;
 
 public final class EnemyFactory {
-  private static final float BASE_SPAWN_INTERVAL = 7;
+  private static final float BASE_SPAWN_INTERVAL = 5;
   private final Tunnelblick game;
   private float timeUntilSpawn = 1;
 
@@ -16,7 +16,7 @@ public final class EnemyFactory {
                                Math.sqrt(difficulty));
 
       double what = difficulty * Math.random();
-      if (what < 0.5)
+      if (what < 2.0)
         game.field.add(new Cactus(game));
       else
         game.field.add(new FireFern(game));
