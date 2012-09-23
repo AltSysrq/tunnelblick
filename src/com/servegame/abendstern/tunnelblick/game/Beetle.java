@@ -8,9 +8,9 @@ public class Beetle extends Enemy {
     0, -DIM, 0, -DIM,
     0, +DIM, 0, -DIM,
     1, 0, 0.5f, 1,
-    0, 0, DIM, 0,
+    0, 0, 1.5f*DIM, 0,
 
-    0, 0, DIM, 0,
+    0, 0, 1.5f*DIM, 0,
     1, 0, 0, 1,
     0, -DIM, 0, -DIM,
     0, -DIM, 0, +DIM,
@@ -18,9 +18,9 @@ public class Beetle extends Enemy {
     0, -DIM, 0, +DIM,
     0, +DIM, 0, +DIM,
     1, 0, 0.5f, 1,
-    0, 0, DIM, 0,
+    0, 0, 1.5f*DIM, 0,
 
-    0, 0, DIM, 0,
+    0, 0, 1.5f*DIM, 0,
     1, 0, 0, 1,
     0, +DIM, 0, -DIM,
     0, +DIM, 0, +DIM,

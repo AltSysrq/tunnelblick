@@ -109,7 +109,7 @@ public class Bat extends Enemy {
   private boolean isFlying = true;
   private Player player;
   private float vy, vz;
-  private static final float GRAVITY = -10.0f;
+  private static final float GRAVITY = -6.0f;
   private static final float XSPEED = 0.4f;
   private static final float DROP_THRESH = 4;
 
