@@ -155,5 +155,5 @@ public class Bat extends Enemy {
   protected float getColourG() { return -1; }
   protected float getColourB() { return 1; }
   protected float getPulseSpeed() { return 20; }
-  protected int getAward() { return 2500; }
+  protected int getAward() { return 750; }
 }

@@ -23,13 +23,13 @@ public final class EnemyFactory {
       else if (what < 3.0)
         game.field.add(new FireFern(game));
       else if (what < 3.5)
+        game.field.add(new Bat(game));
+      else if (what < 4.0)
         game.field.add(new Beetle(game));
       else if (what < 4.5)
         game.field.add(new Hurtle(game));
       else if (what < 5.5)
         game.field.add(new Flea(game));
-      else
-        game.field.add(new Bat(game));
     }
 
     timeUntilPillar -= et;
