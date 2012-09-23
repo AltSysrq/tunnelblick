@@ -11,6 +11,7 @@ public class Tunnelblick extends GameState {
   public final Distortion distortion = new Distortion();
   private Player player;
   public final GameManager man;
+  private final MusicPlayer music;
 
   private int score = 0;
   private float totalDistance = 0;
@@ -21,9 +22,12 @@ public class Tunnelblick extends GameState {
     this.man = man;
     player = new Player(this);
     field.add(player);
+    music = new MusicPlayer(distortion);
+    man.getAudioPlayer().addSource(music, (short)0x7FFF);
   }
 
   protected GameState updateThis(float et) {
+    music.update(et);
     factory.update(et, player.getSpeed());
     field.update(et);
     tunnel.update(et);

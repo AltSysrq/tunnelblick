@@ -46,6 +46,7 @@ public final class Distortion {
   }
 
   private final LinkedList<Section> sections = new LinkedList<Section>();
+  private float convulsionMult = 1;
 
   public Distortion() {
     sections.add(new Section());
@@ -63,6 +64,15 @@ public final class Distortion {
 
     sections.getFirst().distanceLeft -= off;
     refill(violence);
+  }
+
+  /**
+   * Sets the convulsion multiplier.
+   *
+   * This adjusts the strength of the existing distortions.
+   */
+  public void setConvulsionMult(float m) {
+    convulsionMult = m;
   }
 
   private static float cos(float f) { return (float)Math.cos(f); }
@@ -96,6 +106,8 @@ public final class Distortion {
       } else {
         ad = s.distanceLeft;
       }
+
+      ad *= convulsionMult;
 
       x = x*cos(s.yaw*ad)*cos(s.roll*ad*ROLL_MULT)
         - y*sin(s.roll*ad*ROLL_MULT)
