@@ -16,7 +16,7 @@ public abstract class ModelledObject extends GameObject {
   private float[] model;
   protected final Distortion distortion;
   /**
-   * The around-centre-Z rotation of the model, in degrees.
+   * The around-centre-Y rotation of the model, in degrees.
    */
   protected float rotation = 0;
 
@@ -55,7 +55,7 @@ public abstract class ModelledObject extends GameObject {
   public void draw(GL2 gl) {
     gl.glPushMatrix();
     distortion.t(gl, x, y, z);
-    gl.glRotatef(rotation, 0, 0, 1);
+    gl.glRotatef(rotation, 0, 1, 0);
     gl.glBegin(GL.GL_TRIANGLES);
     for (int i = 0; i < model.length; i += 4) {
       if (model[i] == 0)

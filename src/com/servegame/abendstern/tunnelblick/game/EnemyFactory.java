@@ -16,8 +16,10 @@ public final class EnemyFactory {
                                Math.sqrt(difficulty));
 
       double what = difficulty * Math.random();
-      if (what < 2 || true)
+      if (what < 0.5)
         game.field.add(new Cactus(game));
+      else
+        game.field.add(new FireFern(game));
     }
   }
 }
