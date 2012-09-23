@@ -46,6 +46,10 @@ public abstract class Enemy extends ModelledObject {
       //Play sound
       SoundEffect.play(getDeathSound(), game.man.getAudioPlayer(),
                        (short)(0x7FFF / Math.min(1, -z)));
+      //Spawn confetti
+      field.add(new Confetti(field, x, y, z,
+                             getColourR(), getColourG(), getColourB(),
+                             distortion));
       //Create pulses
       int initialCol = (int)(x / Tunnel.GSQ_SZ);
       float r = getColourR(), g = getColourG(), b = getColourB();
