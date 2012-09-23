@@ -55,7 +55,7 @@ public final class SoundEffect implements AudioSource {
 
         for (int i = 0; i < buffer.length; ++i)
           buffer[i] = (short)(
-            ((short)byteBuffer[i*2+0]) |
+            (((short)byteBuffer[i*2+0]) & 0xFF) |
             (((short)byteBuffer[i*2+1]) << 8));
 
         effects.put(filename, buffer);
