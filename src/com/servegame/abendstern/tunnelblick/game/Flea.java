@@ -52,7 +52,7 @@ public class Flea extends Enemy {
   private static final float GRAVITY = -4.5f;
   private boolean blocked = false;
   public Flea(Tunnelblick tb) {
-    super(tb, MODEL, 7);
+    super(tb, MODEL, 4);
     vz = -tb.getPlayer().getSpeed() / 2;
     vy = 0;
   }
