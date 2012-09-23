@@ -233,4 +233,11 @@ implements Destroyable, GLEventListener, Runnable {
         is.pointers[i][j] = inputStatus.pointers[i][j];
     return is;
   }
+
+  /**
+   * Returns the AudioPlayer managed by this GameManager.
+   */
+  public AudioPlayer getAudioPlayer() {
+    return audioPlayer;
+  }
 }

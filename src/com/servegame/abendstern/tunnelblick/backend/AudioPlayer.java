@@ -39,6 +39,8 @@ public final class AudioPlayer extends Thread {
 
     try {
       line = AudioSystem.getSourceDataLine(FORMAT);
+      line.open();
+      line.start();
       //There are multiple exception types which can be thrown which do not
       //share a common superclass (other than Exception) and which indicate
       //essentially the same thing.

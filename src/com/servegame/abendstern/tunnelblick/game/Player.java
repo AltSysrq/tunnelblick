@@ -2,6 +2,7 @@ package com.servegame.abendstern.tunnelblick.game;
 
 import javax.media.opengl.*;
 import com.servegame.abendstern.tunnelblick.backend.InputEvent;
+import com.servegame.abendstern.tunnelblick.backend.SoundEffect;
 
 public class Player extends ModelledObject {
   private static final float HW = 0.1f, HH = 0.075f, FZ = -0.3f, BZ = 0.05f;
@@ -90,6 +91,9 @@ public class Player extends ModelledObject {
    */
   public void kill() {
     alive = false;
+
+    SoundEffect.play("sound/player_death.pcm", game.man.getAudioPlayer(),
+                     (short)0x5000);
   }
 
   public void receiveInput(InputEvent e) {
