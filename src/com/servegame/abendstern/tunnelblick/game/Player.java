@@ -54,7 +54,7 @@ public class Player extends ModelledObject {
   static { normalise(MODEL); }
 
   float vy = 0, vz = -2.0f;
-  private static final float GRAVITY = -5.0f, ACCEL = -0.01f;
+  private static final float GRAVITY = -5.0f, ACCEL = -0.015f;
 
   private final Tunnelblick game;
 
