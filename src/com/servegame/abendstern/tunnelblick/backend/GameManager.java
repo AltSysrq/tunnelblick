@@ -25,6 +25,7 @@ implements Destroyable, GLEventListener, Runnable {
   private boolean stateNeedsConfigureGL = false;
   private final InputStatus inputStatus = new InputStatus();
   private boolean alive = true;
+  private final AudioPlayer audioPlayer = new AudioPlayer(this);
 
   private final LinkedList<InputDriver> inputDrivers =
     new LinkedList<InputDriver>();
@@ -55,6 +56,8 @@ implements Destroyable, GLEventListener, Runnable {
           alive = false;
         }
       });
+
+    audioPlayer.start();
   }
 
   public static void main(String[] argv) {
@@ -68,6 +71,7 @@ implements Destroyable, GLEventListener, Runnable {
 
   @Override
   public void destroy() {
+    audioPlayer.stopPlaying();
     for (WeakReference<Destroyable> wd: resources) {
       Destroyable d = wd.get();
       if (d != null)
@@ -75,6 +79,9 @@ implements Destroyable, GLEventListener, Runnable {
     }
 
     frame.dispose();
+    try {
+      audioPlayer.join();
+    } catch (InterruptedException e) {}
   }
 
   @Override
