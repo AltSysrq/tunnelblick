@@ -96,6 +96,8 @@ public abstract class GameObject {
    * true, the movement will alway occur, triggering a collision with anything
    * that is already there.
    *
+   * The distance moved is also considered for collision detection.
+   *
    * @param x The new X coordinate to which to try to move
    * @param y The new Y coordinate to which to try to move
    * @param z The new Z coordinate to which to try to move
@@ -108,11 +110,18 @@ public abstract class GameObject {
     if (x + w/2 > 1) x = 1 - w/2;
     if (y - h/2 < 0) y = h/2;
 
+    float dx = Math.abs(this.x-x);
+    float dy = Math.abs(this.y-y);
+    float dz = Math.abs(this.z-z);
+    float cx = (x+this.x)/2;
+    float cy = (y+this.y)/2;
+    float cz = (z+this.z)/2;
+
     for (GameObject that: field) {
       if (that != this) {
-        if (overlap(x, w, that.x, that.w) &&
-            overlap(y, h, that.y, that.h) &&
-            overlap(z, l, that.z, that.l)) {
+        if (overlap(cx, w+dx, that.x, that.w) &&
+            overlap(cy, h+dy, that.y, that.h) &&
+            overlap(cz, l+dz, that.z, that.l)) {
           if (force) {
             this.collideWith(that);
             that.collideWith(this);
