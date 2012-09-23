@@ -12,12 +12,12 @@ import static java.lang.Math.*;
 public final class Distortion {
   private static final float SECTION_LEN = Tunnel.GSQ_LEN*8;
   private static final int NUM_SECTIONS = Tunnel.GRID_LENGTH/8;
-  private static final float ROLL_MULT = 3;
+  private static final float ROLL_MULT = 1;
   private static final class Section {
     float distanceLeft;
     float roll, pitch, yaw;
 
-    private static final float SUDDEN_RESET_PROB = 0.01f;
+    private static final float SUDDEN_RESET_PROB = 0.05f;
 
     Section() {
       distanceLeft = SECTION_LEN;
@@ -25,7 +25,7 @@ public final class Distortion {
     }
 
     Section mutate(float violence) {
-      float mutation = Math.min(100, violence)/400;
+      float mutation = Math.min(100, violence)/300;
       float maxValue = Math.max(20, 200/(100-Math.min(99,violence)));
       Section sec = new Section();
       if (Math.random() < SUDDEN_RESET_PROB)
@@ -160,7 +160,8 @@ public final class Distortion {
     float angle = (float)acos(dot /* up is a unit vector */);
     //Convert angle to degrees for OpenGL
     angle *= 360.0f / 2.0f / (float)Math.PI;
-    gl.glRotatef(angle, cross[0], cross[1], cross[2]);
+    if (!Float.isNaN(angle) && !Float.isInfinite(angle))
+      gl.glRotatef(angle, cross[0], cross[1], cross[2]);
   }
 
   private void refill(float violence) {
