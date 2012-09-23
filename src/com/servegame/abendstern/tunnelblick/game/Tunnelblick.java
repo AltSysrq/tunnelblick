@@ -12,6 +12,9 @@ public class Tunnelblick extends GameState {
   private Player player;
   public final GameManager man;
 
+  private int score = 0;
+  private float totalDistance = 0;
+
   private EnemyFactory factory = new EnemyFactory(this);
 
   public Tunnelblick(GameManager man) {
@@ -25,10 +28,21 @@ public class Tunnelblick extends GameState {
     field.update(et);
     tunnel.update(et);
     float offset = -getNearClippingPlane() - player.getL()/2;
+    totalDistance += -player.getZ() + offset;
     distortion.translateZ(player, offset, player.getSpeed());
     tunnel.translateZ(player, offset);
     field.translateZ(player, offset);
-    return this;
+
+    if (player.isAlive()) {
+      return this;
+    } else {
+      //TODO: Better end-of-game
+      System.out.println("Game over!");
+      System.out.println("Your score: " + score);
+      System.out.println("Your speed: " + player.getSpeed());
+      System.out.println("Your distance: " + totalDistance);
+      return null;
+    }
   }
 
   protected void drawThis(GL2 gl) {
@@ -78,6 +92,13 @@ public class Tunnelblick extends GameState {
 
   private float getNearClippingPlane() {
     return 1.5f/player.getSpeed();
+  }
+
+  /**
+   * Adds the given amount to the player's score.
+   */
+  public void addScore(int amt) {
+    score += amt;
   }
 
   public static void main(String[] args) {

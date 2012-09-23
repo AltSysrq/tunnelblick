@@ -39,6 +39,8 @@ public abstract class Enemy extends ModelledObject {
     if (hitPoints <= 0) {
       //Die
       alive = false;
+      //Add score
+      game.addScore(getAward());
       //Create pulses
       int initialCol = (int)(x / Tunnel.GSQ_SZ);
       float r = getColourR(), g = getColourG(), b = getColourB();
