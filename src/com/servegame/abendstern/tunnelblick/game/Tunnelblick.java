@@ -18,6 +18,11 @@ public class Tunnelblick extends GameState {
 
   private EnemyFactory factory = new EnemyFactory(this);
 
+  //Inverse portion faded out after the player is dead; fades out at
+  //FADE_OUT_RATE
+  private float fadeOut = 1;
+  private static final float FADE_OUT_RATE = 0.3f;
+
   public Tunnelblick(GameManager man) {
     this.man = man;
     player = new Player(this);
@@ -38,6 +43,9 @@ public class Tunnelblick extends GameState {
     field.translateZ(player, offset);
 
     if (player.isAlive()) {
+      return this;
+    } else if (fadeOut > 0) {
+      fadeOut -= FADE_OUT_RATE*et;
       return this;
     } else {
       //TODO: Better end-of-game
@@ -64,8 +72,8 @@ public class Tunnelblick extends GameState {
     gl.glEnable(GL2.GL_FOG);
     gl.glFogi(GL2.GL_FOG_MODE, GL2.GL_LINEAR);
     gl.glFogf(GL2.GL_FOG_DENSITY, 0.25f);
-    gl.glFogf(GL2.GL_FOG_START, 1.0f);
-    gl.glFogf(GL2.GL_FOG_END, 1.1f*getSpawnDistance());
+    gl.glFogf(GL2.GL_FOG_START, Math.max(getNearClippingPlane(), fadeOut*1.0f));
+    gl.glFogf(GL2.GL_FOG_END, Math.max(1.1f, fadeOut*1.1f*getSpawnDistance()));
     gl.glMatrixMode(GL2.GL_PROJECTION);
     gl.glLoadIdentity();
     gl.glFrustumf(-1, 1, -man.vheight(), man.vheight(),
