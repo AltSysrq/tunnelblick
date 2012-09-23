@@ -26,6 +26,8 @@ public class Beetle extends Enemy {
     0, +DIM, 0, +DIM,
   };
 
+  static { normalise(MODEL); }
+
   private static final float SPEED = 0.5f;
   private float vx;
 
