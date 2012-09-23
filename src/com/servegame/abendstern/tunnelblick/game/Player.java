@@ -76,7 +76,7 @@ public class Player extends ModelledObject {
     if (timeUntilShot <= 0) {
       timeUntilShot += SHOT_INTERVAL;
 
-      game.field.add(new Projectile(game.field, this, x, y, z,
+      game.field.add(new Projectile(game.field, this, x, y, z, vz,
                                     -1, game.distortion));
     }
   }

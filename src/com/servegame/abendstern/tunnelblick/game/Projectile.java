@@ -44,11 +44,11 @@ public class Projectile extends ModelledObject {
   private GameObject owner;
   private float vz;
   public Projectile(GameField field, GameObject owner,
-                    float x, float y, float z,
+                    float x, float y, float z, float ownerSpeed,
                     float direction, Distortion distortion) {
     super(field, x, y, z, MODEL, distortion);
     this.owner = owner;
-    vz = direction * SPEED;
+    vz = direction * SPEED + ownerSpeed;
   }
 
   public void update(float et) {
