@@ -66,6 +66,11 @@ public class Tunnelblick extends GameState {
   }
 
   /**
+   * Returns the player object itself.
+   */
+  public Player getPlayer() { return player; }
+
+  /**
    * Returns the X coordinate of the player (so enemies won't spawn in the line
    * of fire).
    */

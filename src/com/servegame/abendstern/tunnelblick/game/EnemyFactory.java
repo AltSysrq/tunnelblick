@@ -24,8 +24,10 @@ public final class EnemyFactory {
         game.field.add(new FireFern(game));
       else if (what < 3.5)
         game.field.add(new Beetle(game));
-      else
+      else if (what < 4.5)
         game.field.add(new Hurtle(game));
+      else
+        game.field.add(new Flea(game));
     }
 
     timeUntilPillar -= et;
