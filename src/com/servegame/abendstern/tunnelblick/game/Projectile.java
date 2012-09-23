@@ -40,7 +40,7 @@ public class Projectile extends ModelledObject {
   };
 
   private static final float SPEED = 10;
-  private static final float LIFETIME = 5;
+  private static final float LIFETIME = 1.5f;
 
   private GameObject owner;
   private float vz, lifetime;
