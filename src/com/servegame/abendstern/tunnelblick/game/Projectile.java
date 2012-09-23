@@ -1,7 +1,8 @@
 package com.servegame.abendstern.tunnelblick.game;
 
 public class Projectile extends ModelledObject {
-  private static final float R = 0.015f;
+  public static final float RADIUS = 0.015f;
+  private static final float R = RADIUS;
   private static final float[] MODEL = {
     1, 1, 1, 0,
 

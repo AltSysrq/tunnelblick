@@ -19,7 +19,13 @@ public abstract class Enemy extends ModelledObject {
           tb.distortion);
     this.hitPoints = hp;
     this.game = tb;
-    moveTo((float)Math.random(), h/2, z, true);
+    //Select an X coordinate that doesn't place us within the line of fire.
+    float x = (float)Math.random();
+    float px = tb.getPlayerX();
+    while (x+w/2+Projectile.RADIUS > px &&
+           x-w/2-Projectile.RADIUS < px)
+      x = (float)Math.random();
+    moveTo(x, h/2, z, true);
   }
 
   public void collideWith(GameObject go) {}

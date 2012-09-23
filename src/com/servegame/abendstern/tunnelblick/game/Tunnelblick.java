@@ -65,6 +65,12 @@ public class Tunnelblick extends GameState {
     return Math.min(8*player.getSpeed(), Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN/2);
   }
 
+  /**
+   * Returns the X coordinate of the player (so enemies won't spawn in the line
+   * of fire).
+   */
+  public float getPlayerX() { return player.getX(); }
+
   private float getNearClippingPlane() {
     return 1.5f/player.getSpeed();
   }
