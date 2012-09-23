@@ -78,4 +78,5 @@ public class FireFern extends Enemy {
   protected float getColourB() { return -0.5f; }
   protected float getPulseSpeed() { return 12; }
   protected int getAward() { return 250; }
+  protected String getDeathSound() { return "sound/firefern_death.pcm"; }
 }

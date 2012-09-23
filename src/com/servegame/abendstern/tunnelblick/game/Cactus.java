@@ -82,4 +82,5 @@ public class Cactus extends Enemy {
   protected float getColourB() { return 0; }
   protected float getPulseSpeed() { return 15.0f; }
   protected int getAward() { return 100; }
+  protected String getDeathSound() { return "sound/cactus_death.pcm"; }
 }

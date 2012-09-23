@@ -2,6 +2,8 @@ package com.servegame.abendstern.tunnelblick.game;
 
 import javax.media.opengl.*;
 
+import com.servegame.abendstern.tunnelblick.backend.SoundEffect;
+
 /**
  * Common base class for enemy objects.
  *
@@ -41,6 +43,9 @@ public abstract class Enemy extends ModelledObject {
       alive = false;
       //Add score
       game.addScore(getAward());
+      //Play sound
+      SoundEffect.play(getDeathSound(), game.man.getAudioPlayer(),
+                       (short)(0x7FFF / Math.min(1, -z)));
       //Create pulses
       int initialCol = (int)(x / Tunnel.GSQ_SZ);
       float r = getColourR(), g = getColourG(), b = getColourB();
@@ -76,4 +81,8 @@ public abstract class Enemy extends ModelledObject {
    * enemy.
    */
   protected abstract int getAward();
+  /**
+   * Returns the name of the audio file to play on death.
+   */
+  protected abstract String getDeathSound();
 }

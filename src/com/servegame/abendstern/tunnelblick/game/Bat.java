@@ -171,4 +171,5 @@ public class Bat extends Enemy {
   protected float getColourB() { return 1; }
   protected float getPulseSpeed() { return 20; }
   protected int getAward() { return 750; }
+  protected String getDeathSound() { return "sound/bat_death.pcm"; }
 }

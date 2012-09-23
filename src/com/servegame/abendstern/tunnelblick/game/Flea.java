@@ -73,4 +73,5 @@ public class Flea extends Enemy {
   protected float getColourB() { return -0.3f; }
   protected float getPulseSpeed() { return 22; }
   protected int getAward() { return 1000; }
+  protected String getDeathSound() { return "sound/flea_death.pcm"; }
 }

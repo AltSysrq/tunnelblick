@@ -53,4 +53,5 @@ public class Beetle extends Enemy {
   protected float getColourB() { return 1; }
   protected float getPulseSpeed() { return 18; }
   protected int getAward() { return 500; }
+  protected String getDeathSound() { return "sound/beetle_death.pcm"; }
 }
