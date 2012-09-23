@@ -15,7 +15,7 @@ public abstract class Enemy extends ModelledObject {
   private final Tunnelblick game;
 
   protected Enemy(Tunnelblick tb, float[] model, int hp) {
-    super(tb.field, 0, 0, -32, model,
+    super(tb.field, 0, 0, -tb.getSpawnDistance(), model,
           tb.distortion);
     this.hitPoints = hp;
     this.game = tb;

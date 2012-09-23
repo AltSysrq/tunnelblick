@@ -53,6 +53,13 @@ public class Tunnelblick extends GameState {
     gl.glLoadIdentity();
   }
 
+  /**
+   * Returns the distance at which objects should spawn.
+   */
+  public float getSpawnDistance() {
+    return Math.min(8*player.getSpeed(), Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN/2);
+  }
+
   private float getNearClippingPlane() {
     return 1.5f/player.getSpeed();
   }
