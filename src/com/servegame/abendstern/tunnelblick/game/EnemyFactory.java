@@ -20,8 +20,10 @@ public final class EnemyFactory {
       double what = difficulty * Math.random();
       if (what < 2.0)
         game.field.add(new Cactus(game));
-      else
+      else if (what < 3.0)
         game.field.add(new FireFern(game));
+      else
+        game.field.add(new Beetle(game));
     }
 
     timeUntilPillar -= et;
