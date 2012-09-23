@@ -58,7 +58,7 @@ public class Player extends ModelledObject {
 
   private final Tunnelblick game;
 
-  private static final float SHOT_INTERVAL = 0.5f;
+  private static final float SHOT_INTERVAL = 0.3333f;
   private float timeUntilShot = SHOT_INTERVAL;
 
   public Player(Tunnelblick tb) {

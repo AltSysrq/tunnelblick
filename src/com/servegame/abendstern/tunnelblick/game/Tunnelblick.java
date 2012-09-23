@@ -43,6 +43,11 @@ public class Tunnelblick extends GameState {
   }
 
   public void configureGL(GL2 gl) {
+    gl.glEnable(GL2.GL_FOG);
+    gl.glFogi(GL2.GL_FOG_MODE, GL2.GL_EXP2);
+    gl.glFogf(GL2.GL_FOG_DENSITY, 0.25f);
+    gl.glFogf(GL2.GL_FOG_START, 1.0f);
+    gl.glFogf(GL2.GL_FOG_END, 2.0f*getSpawnDistance());
     gl.glMatrixMode(GL2.GL_PROJECTION);
     gl.glLoadIdentity();
     gl.glFrustumf(-1, 1, -man.vheight(), man.vheight(),
