@@ -124,6 +124,13 @@ public final class Distortion {
     gl.glVertex3f(v[0], v[1], v[2]);
   }
 
+  private static float len(float[] v) {
+    return (float)Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+  }
+  private static float dot(float[] a, float[] b) {
+    return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+  }
+
   /**
    * Adds an appropriate translation transform to the current GL matrix.
    */
@@ -131,6 +138,29 @@ public final class Distortion {
     float v[] = new float[] { x,y,z };
     xform(v);
     gl.glTranslatef(v[0], v[1], v[2]);
+
+    //We also need to rotate the object so "up" is still correct
+    //Project a (0,1,z) vector to the same Z coordinate, then subtract out what
+    //projecting (0,0,z) gives us. The result is the "up" vector, which must be
+    //rotated wrt the expected (0,1,0).
+    //The axis is the cross product between them, and the angle can be derived
+    //from the dot product.
+    float base[] = new float[] { 0,0,z };
+    float up  [] = new float[] { 0,1,z };
+    xform(base);
+    xform(up);
+    for (int i = 0; i < 3; ++i) up[i] -= base[i];
+
+    float cross[] = new float[] {
+      1*up[2] - 0*up[1],
+      0*up[2] - 0*up[0],
+      0*up[1] - 1*up[0],
+    };
+    float dot = up[1]; //Dotted with (0,1,0)
+    float angle = (float)acos(dot /* up is a unit vector */);
+    //Convert angle to degrees for OpenGL
+    angle *= 360.0f / 2.0f / (float)Math.PI;
+    gl.glRotatef(angle, cross[0], cross[1], cross[2]);
   }
 
   private void refill(float violence) {
