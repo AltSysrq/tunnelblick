@@ -40,21 +40,24 @@ public class Projectile extends ModelledObject {
   };
 
   private static final float SPEED = 10;
+  private static final float LIFETIME = 5;
 
   private GameObject owner;
-  private float vz;
+  private float vz, lifetime;
   public Projectile(GameField field, GameObject owner,
                     float x, float y, float z, float ownerSpeed,
                     float direction, Distortion distortion) {
     super(field, x, y, z, MODEL, distortion);
     this.owner = owner;
     vz = direction * SPEED + ownerSpeed;
+    lifetime = 0;
   }
 
   public void update(float et) {
     moveTo(x, y, z + vz*et, true);
+    lifetime += et;
 
-    if (-z > Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN/2)
+    if (-z > Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN/2 || lifetime > LIFETIME)
       alive = false;
   }
 
