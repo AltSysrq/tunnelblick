@@ -12,6 +12,7 @@ import static java.lang.Math.*;
 public final class Distortion {
   private static final float SECTION_LEN = Tunnel.GSQ_LEN*8;
   private static final int NUM_SECTIONS = Tunnel.GRID_LENGTH/8;
+  private static final float ROLL_MULT = 3;
   private static final class Section {
     float distanceLeft;
     float roll, pitch, yaw;
@@ -96,12 +97,12 @@ public final class Distortion {
         ad = s.distanceLeft;
       }
 
-      x = x*cos(s.yaw*ad)*cos(s.roll*ad)
-        - y*sin(s.roll*ad)
+      x = x*cos(s.yaw*ad)*cos(s.roll*ad*ROLL_MULT)
+        - y*sin(s.roll*ad*ROLL_MULT)
         - z*sin(s.yaw*ad);
-      y = y*cos(s.roll*ad)*cos(s.pitch*ad)
+      y = y*cos(s.roll*ad*ROLL_MULT)*cos(s.pitch*ad)
         - z*sin(s.pitch*ad)
-        + x*sin(s.roll*ad);
+        + x*sin(s.roll*ad*ROLL_MULT);
       z = z*cos(s.yaw*ad)*cos(s.pitch*ad)
         + x*sin(s.yaw*ad)
         + y*sin(s.yaw*ad);
