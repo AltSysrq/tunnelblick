@@ -53,7 +53,7 @@ public class Projectile extends ModelledObject {
   public void update(float et) {
     moveTo(x, y, z + vz*et, true);
 
-    if (z > Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN)
+    if (-z > Tunnel.GRID_LENGTH*Tunnel.GSQ_LEN/2)
       alive = false;
   }
 

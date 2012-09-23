@@ -25,6 +25,7 @@ public class Tunnelblick extends GameState {
     field.update(et);
     tunnel.update(et);
     float offset = -getNearClippingPlane() - player.getL()/2;
+    distortion.translateZ(player, offset, player.getSpeed());
     tunnel.translateZ(player, offset);
     field.translateZ(player, offset);
     return this;

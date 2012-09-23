@@ -112,8 +112,7 @@ public final class Tunnel {
     }
 
     //Translate for partial squares
-    gl.glPushMatrix();
-    gl.glTranslatef(0, 0, -(float)(Math.floor(offset)-offset)*GSQ_LEN);
+    float zt = (float)(Math.floor(offset)-offset)*GSQ_LEN;
 
     gl.glBegin(GL2.GL_TRIANGLES);
 
@@ -127,13 +126,13 @@ public final class Tunnel {
       for (int x = 0; x < GRID_WIDTH; ++x) {
         float[] colour = grid[(firstFloorTile+z) % GRID_LENGTH][x];
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace + zt));
 
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
-        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, (x+0)*GSQ_SZ + halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace + zt));
+        d.v(gl, (x+1)*GSQ_SZ - halfSpace, 0, -((z+1)*GSQ_LEN - halfSpace + zt));
       }
     }
 
@@ -146,18 +145,17 @@ public final class Tunnel {
         float x = (i < GRID_WIDTH/2? 0 : 1);
         float y = 2*(i < GRID_WIDTH/2? i*GSQ_SZ : (GRID_WIDTH - i - 1)*GSQ_SZ);
         gl.glColor3f(colour[0], colour[1], colour[2]);
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace + zt));
 
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace));
-        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace));
-        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_LEN - halfSpace));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+0)*GSQ_LEN + halfSpace + zt));
+        d.v(gl, x, y +   0.0f*2 + halfSpace, -((z+1)*GSQ_LEN - halfSpace + zt));
+        d.v(gl, x, y + GSQ_SZ*2 - halfSpace, -((z+1)*GSQ_LEN - halfSpace + zt));
       }
     }
 
     gl.glEnd();
-    gl.glPopMatrix();
   }
 
   /**
@@ -193,7 +191,9 @@ public final class Tunnel {
    */
   public void translateZ(GameObject reference, float offset) {
     this.offset -= (reference.getZ() - offset) / GSQ_LEN;
-    while (this.offset > GRID_LENGTH)
+    while (this.offset >= GRID_LENGTH)
       this.offset -= GRID_LENGTH;
+    while (this.offset < 0)
+      this.offset += GRID_LENGTH;
   }
 }

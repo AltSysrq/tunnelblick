@@ -54,12 +54,12 @@ public abstract class ModelledObject extends GameObject {
 
   public void draw(GL2 gl) {
     gl.glPushMatrix();
-    gl.glTranslatef(x, y, z);
+    distortion.t(gl, x, y, z);
     gl.glRotatef(rotation, 0, 0, 1);
     gl.glBegin(GL.GL_TRIANGLES);
     for (int i = 0; i < model.length; i += 4) {
       if (model[i] == 0)
-        distortion.v(gl, model[i+1], model[i+2], model[i+3]);
+        gl.glVertex3f(model[i+1], model[i+2], model[i+3]);
       else
         gl.glColor3f(model[i+1], model[i+2], model[i+3]);
     }
