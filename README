@@ -1,0 +1,17 @@
+Tunnelblick is a simple Mouse-or-Kinect-driven tunnel shooter created to make a
+number of points for the CSM CSCI598B Readings in Software Engineering class.
+
+To compile/run, you need JOGL and OpenNI in your classpath; for example, on
+Debian/Ubuntu,
+  export CLASSPATH=/usr/share/java/jogl2.jar:/usr/share/java/gluegen2-rt.jar:/usr/share/java/org.OpenNI.jar:.
+
+You don't need a Kinect to run it; by default, move the mouse to move your ship
+and left-click to jump. To use the kinnect, run
+  java com.servegame.abendstern.tunnelblick.game.Tunnelblick 2.0 true
+Position yourself so that the Kinect can see at least your upper body and head,
+then gently flap your arms like a bird until the game starts. There is
+currently no way to jump with the Kinect controls; you'll need to hold a mouse
+to do so.
+
+Destroy enemies to score points and avoid obstacles. When you die, your score
+is printed to stdout.
