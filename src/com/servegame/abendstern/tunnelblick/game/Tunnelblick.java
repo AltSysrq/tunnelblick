@@ -114,6 +114,7 @@ public class Tunnelblick extends GameState {
   }
 
   public static void main(String[] args) {
+    OpenNiBodyTrackerInputDriver onbtid = new OpenNiBodyTrackerInputDriver(true);
     GameManager man = new GameManager("Tunnelblick", 800, 600);
     KeyboardGestureInputDriver kgid = new KeyboardGestureInputDriver();
     kgid.bind(java.awt.event.KeyEvent.VK_SPACE, InputEvent.GESTURE_JUMP);
@@ -124,6 +125,7 @@ public class Tunnelblick extends GameState {
     ModalMouseMotionInputDriver mmmid = new ModalMouseMotionInputDriver();
     mmmid.setPointerMode(false);
     man.installInputDriver(mmmid);
+    man.installInputDriver(onbtid);
 
     man.setState(new Tunnelblick(man));
     man.run();
