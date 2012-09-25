@@ -54,7 +54,7 @@ public class Player extends ModelledObject {
   };
   static { normalise(MODEL); }
 
-  float vy = 0, vz = -2.0f;
+  private float vy = 0, vz = -2.0f, sensitivity = 1.0f;
   private static final float GRAVITY = -5.0f, ACCEL = -0.015f;
 
   private final Tunnelblick game;
@@ -66,6 +66,10 @@ public class Player extends ModelledObject {
     super(tb.field, 0.5f, 0, 0, MODEL, tb.distortion);
     this.game = tb;
     y = h/2;
+  }
+
+  public void setSensitivity(float sensitivity) {
+    this.sensitivity = sensitivity;
   }
 
   public void update(float et) {
@@ -99,7 +103,7 @@ public class Player extends ModelledObject {
   public void receiveInput(InputEvent e) {
     switch (e.type) {
     case InputEvent.TYPE_BODY_MOVEMENT:
-      moveTo(e.x, y, z, true);
+      moveTo(0.5f + sensitivity*(e.x - 0.5f), y, z, true);
       break;
 
     case InputEvent.TYPE_GESTURE:

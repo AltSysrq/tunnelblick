@@ -113,8 +113,19 @@ public class Tunnelblick extends GameState {
     score += amt;
   }
 
-  public static void main(String[] args) {
-    OpenNiBodyTrackerInputDriver onbtid = new OpenNiBodyTrackerInputDriver(true);
+  /**
+   * Usage:
+   *   java ...Tunnelblick [sensitivity=1.0 [useopenni=false]]
+   */
+  public static void main(String[] argv) {
+    float sensitivity = 1.0f;
+    boolean withOpenNi = false;
+    if (argv.length >= 1)
+      sensitivity = Float.valueOf(argv[0]).floatValue();
+    if (argv.length >= 2)
+      withOpenNi = Boolean.valueOf(argv[1]);
+    OpenNiBodyTrackerInputDriver onbtid =
+      withOpenNi? new OpenNiBodyTrackerInputDriver(true) : null;
     GameManager man = new GameManager("Tunnelblick", 800, 600);
     KeyboardGestureInputDriver kgid = new KeyboardGestureInputDriver();
     kgid.bind(java.awt.event.KeyEvent.VK_SPACE, InputEvent.GESTURE_JUMP);
@@ -125,9 +136,12 @@ public class Tunnelblick extends GameState {
     ModalMouseMotionInputDriver mmmid = new ModalMouseMotionInputDriver();
     mmmid.setPointerMode(false);
     man.installInputDriver(mmmid);
-    man.installInputDriver(onbtid);
+    if (withOpenNi)
+      man.installInputDriver(onbtid);
 
-    man.setState(new Tunnelblick(man));
+    Tunnelblick state = new Tunnelblick(man);
+    state.getPlayer().setSensitivity(sensitivity);
+    man.setState(state);
     man.run();
     man.destroy();
   }
