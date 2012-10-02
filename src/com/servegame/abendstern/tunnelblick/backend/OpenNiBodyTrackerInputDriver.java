@@ -5,6 +5,9 @@ import org.OpenNI.*;
 
 /**
  * Uses OpenNI body tracking to position the body(ies).
+ *
+ * It also has a jump "gesture" hacked in which triggers when the user's right
+ * arm is above his torso.
  */
 public class OpenNiBodyTrackerInputDriver implements InputDriver {
   private boolean ready = false;
@@ -180,6 +183,7 @@ public class OpenNiBodyTrackerInputDriver implements InputDriver {
     for (int user: joints.keySet()) {
       try {
         getJoint(user, SkeletonJoint.TORSO);
+        getJoint(user, SkeletonJoint.RIGHT_HAND);
       } catch (StatusException se) {
         se.printStackTrace();
       }
@@ -190,6 +194,12 @@ public class OpenNiBodyTrackerInputDriver implements InputDriver {
       manager.getSharedInputStatus().bodies[body] = x;
       dst.receiveInput(new InputEvent(InputEvent.TYPE_BODY_MOVEMENT,
                                       body, x, 0));
+
+      Point3D hp =
+        joints.get(user).get(SkeletonJoint.RIGHT_HAND).getPosition();
+      if (hp.getY() < p.getY())
+        dst.receiveInput(new InputEvent(InputEvent.TYPE_GESTURE,
+                                        InputEvent.GESTURE_JUMP, 0, 0));
     }
   }
 }
